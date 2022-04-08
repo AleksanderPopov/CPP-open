@@ -1,13 +1,17 @@
 #include "stat_reader.h"
 
 std::ostream& operator<<(std::ostream& out, const BusInfo& info) {
-	if (info.number_stop_ == 0)
+	if (info.number_stop_ == 0) {
 		out << "Bus " << info.name_ << ": not found";
-	else {
+		return out;
+	}
+	else
+	{
 		out << "Bus " << info.name_ << ": ";
 		out << info.number_stop_ << " stops on route, ";
 		out << info.uniq_number_stop_ << " unique stops, ";
-		out << std::setprecision(6)<< info.distance_route_ << " route length";
+		out << std::setprecision(6) << info.distance_route_ << " route length, ";
+		out << std::setprecision(6) << info.curvature_ << " curvature";
 	}
 	
 	return out;
@@ -28,7 +32,6 @@ std::ostream& operator<<(std::ostream& out, const StopInfo& info) {
 			out <<" "<< str;
 		}
 	}
-
 	return out;
 }
 
@@ -37,6 +40,7 @@ void OutputReader(TransportCatalogue& trans_cat) {
 	int query_count;
 	std::cin >> query_count;
 	std::cin.get();
+
 	std::vector<std::pair<std::string, std::string>> all_queries;
 
 	for (int i = 0; i < query_count; ++i) {
@@ -53,13 +57,13 @@ void OutputReader(TransportCatalogue& trans_cat) {
 			std::string str = query.substr(name_start + 1);			
 			all_queries.push_back({ "Stop",str });
 		}
+		
 	}
 
 	std::cout << std::flush;
 
 	for (auto queri : all_queries) {
-		if (queri.first == "Stop") {
-			//std::cout << "QR Stop:" <<queri.second<< std::endl;
+		if (queri.first == "Stop") {			
 			std::cout << trans_cat.GetStopInfo(queri.second) << std::endl;
 		}
 		if (queri.first == "Bus") {			
@@ -67,3 +71,4 @@ void OutputReader(TransportCatalogue& trans_cat) {
 		}
 	}
 }
+
