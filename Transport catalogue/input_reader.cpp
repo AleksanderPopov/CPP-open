@@ -1,9 +1,9 @@
 #include "input_reader.h"
 
-std::unordered_map<std::string,Query> QueryParser(std::string& query) {
+std::unordered_map<std::string, TRANSPORT::DETAIL::Query> TRANSPORT::DETAIL::QueryParser(std::string& query) {
 	
-	std::unordered_map<std::string,Query> query_processing;		
-	Query qr;
+	std::unordered_map<std::string, TRANSPORT::DETAIL::Query> query_processing;
+	TRANSPORT::DETAIL::Query qr;
 
 	if (query.find("Bus") == 0) {
 				
@@ -74,7 +74,7 @@ std::unordered_map<std::string,Query> QueryParser(std::string& query) {
 		std::string lat_s = query.substr(start_lat,stop_lat-start_lat);
 		std::string lon_s = query.substr(start_lon,stop_lon-1-start_lon);  
 
-		Query dist_query;	
+		TRANSPORT::DETAIL::Query dist_query;
 
 		if (stop_lon != std::string::npos) {
 
@@ -121,16 +121,16 @@ std::unordered_map<std::string,Query> QueryParser(std::string& query) {
 	return query_processing;
 }
 
-void InputReader(TransportCatalogue& trans_cat) {
+void TRANSPORT::DETAIL::InputReader(TRANSPORT::TransportCatalogue& trans_cat) {
 
 	int query_count;
 	std::cin >> query_count;
 	std::cin.get();
 
-	std::unordered_map<std::string,Query> tmp_queries;		
-	std::vector<Query> stop_q;
-	std::vector<Query> bus_q;
-	std::vector<Query> dist_q;   
+	std::unordered_map<std::string, TRANSPORT::DETAIL::Query> tmp_queries;
+	std::vector<TRANSPORT::DETAIL::Query> stop_q;
+	std::vector<TRANSPORT::DETAIL::Query> bus_q;
+	std::vector<TRANSPORT::DETAIL::Query> dist_q;
 
 	for (int i = 0; i < query_count; ++i) {
 		std::string temp_queries;		
@@ -152,12 +152,12 @@ void InputReader(TransportCatalogue& trans_cat) {
 
 	for (auto queri : stop_q) {
 
-		Stop tmp(queri.name ,std::stod(queri.query_vector[0]) ,std::stod(queri.query_vector[1]) );
+		TRANSPORT::DATA::Stop tmp(queri.name ,std::stod(queri.query_vector[0]) ,std::stod(queri.query_vector[1]) );
 		trans_cat.AddStop(tmp);
 	}
 
 	for (auto queri : bus_q) {
-		std::deque<Stop*> stop_v;
+		std::deque<TRANSPORT::DATA::Stop*> stop_v;
 		
 		std::set<std::string> to_stops;
 		
@@ -165,7 +165,7 @@ void InputReader(TransportCatalogue& trans_cat) {
 			stop_v.push_back(trans_cat.FindeStop(rq));
 			to_stops.insert(trans_cat.FindeStop(rq)->name_);			
 		}
-		Bus bus_tmp(queri.name, stop_v);
+		TRANSPORT::DATA::Bus bus_tmp(queri.name, stop_v);
 		trans_cat.AddBus(bus_tmp);
 
 		trans_cat.AddBusToStop(queri.name,to_stops);
@@ -182,7 +182,6 @@ void InputReader(TransportCatalogue& trans_cat) {
 			to_stop = rq_d.substr(0,ptr);
 			dist_str = rq_d.substr(ptr+1);
 			btw_dist = std::stod(dist_str);
-			
 			trans_cat.AddDistBtwStop(*trans_cat.FindeStop(query.name), *trans_cat.FindeStop(to_stop),btw_dist);
 		}
 	}

@@ -9,11 +9,20 @@
 
 #include "transport_catalogue.h"
 
-struct Query{
-    std::string name; 
-    std::vector<std::string> query_vector; 
-};
+namespace TRANSPORT {
+    
+    namespace DETAIL {
+    
+        struct Query {
+            std::string name;
+            std::vector<std::string> query_vector;
+        };
 
-std::unordered_map<std::string,Query> QueryParser(std::string& query);
+        std::unordered_map<std::string, TRANSPORT::DETAIL::Query> QueryParser(std::string& query);
+        void InputReader(TRANSPORT::TransportCatalogue& trans_cat);
+    }
+}
 
-void InputReader(TransportCatalogue& trans_cat);
+
+
+

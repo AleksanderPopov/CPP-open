@@ -1,6 +1,6 @@
 #include "stat_reader.h"
 
-std::ostream& operator<<(std::ostream& out, const BusInfo& info) {
+std::ostream& TRANSPORT::DETAIL::operator<<(std::ostream& out, const TRANSPORT::DATA::BusInfo& info) {
 	if (info.number_stop_ == 0) {
 		out << "Bus " << info.name_ << ": not found";
 		return out;
@@ -17,7 +17,7 @@ std::ostream& operator<<(std::ostream& out, const BusInfo& info) {
 	return out;
 }
 
-std::ostream& operator<<(std::ostream& out, const StopInfo& info) {
+std::ostream& TRANSPORT::DETAIL::operator<<(std::ostream& out, const TRANSPORT::DATA::StopInfo& info) {
 	if (!info.exists_) {
 		out << "Stop " << info.name_ << ": not found";
 		return out;
@@ -35,7 +35,7 @@ std::ostream& operator<<(std::ostream& out, const StopInfo& info) {
 	return out;
 }
 
-void OutputReader(TransportCatalogue& trans_cat) {
+void TRANSPORT::DETAIL::OutputReader(TransportCatalogue& trans_cat) {
 	
 	int query_count;
 	std::cin >> query_count;

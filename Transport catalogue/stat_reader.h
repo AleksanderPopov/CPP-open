@@ -7,8 +7,17 @@
 
 #include "transport_catalogue.h"
 #include "input_reader.h"
-
-std::ostream& operator<<(std::ostream& out, const BusInfo& info); 
-std::ostream& operator<<(std::ostream& out, const StopInfo& info);
  
-void OutputReader(TransportCatalogue& trans_cat);
+namespace TRANSPORT {
+    
+    namespace DETAIL {
+
+        void OutputReader(TRANSPORT::TransportCatalogue& trans_cat);
+
+        std::ostream& operator<<(std::ostream& out, const TRANSPORT::DATA::BusInfo& info);
+        std::ostream& operator<<(std::ostream& out, const TRANSPORT::DATA::StopInfo& info);
+
+    }
+}
+
+

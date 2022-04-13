@@ -1,25 +1,25 @@
 #include "transport_catalogue.h"
 
-void TransportCatalogue::AddBus(Bus& new_bus){	
+void TRANSPORT::TransportCatalogue::AddBus(TRANSPORT::DATA::Bus& new_bus){	
 	bus_.emplace(new_bus.name_, new_bus);	
 }	
 
-void TransportCatalogue::AddStop(Stop& new_stop){	
+void TRANSPORT::TransportCatalogue::AddStop(TRANSPORT::DATA::Stop& new_stop){
 	stop_.emplace(new_stop.name_, new_stop);
 	bus_to_stop_[new_stop.name_];
 }	
 
-void TransportCatalogue::AddBusToStop(std::string name, std::set<std::string> bus_to_stops) {	
+void TRANSPORT::TransportCatalogue::AddBusToStop(std::string name, std::set<std::string> bus_to_stops) {
 	for (auto stops : bus_to_stops) {		
 		bus_to_stop_[stops].insert(name);
 	}
 }
 
-void TransportCatalogue::AddDistBtwStop(Stop& from, Stop& to, double dist) {	
+void TRANSPORT::TransportCatalogue::AddDistBtwStop(TRANSPORT::DATA::Stop& from, TRANSPORT::DATA::Stop& to, double dist) {
 	dist_btw_stop_[from.name_].emplace(to.name_, dist);
 }
 
-double TransportCatalogue::GetDistBtwStop(Stop& from, Stop& to) {
+double TRANSPORT::TransportCatalogue::GetDistBtwStop(TRANSPORT::DATA::Stop& from, TRANSPORT::DATA::Stop& to) {
 
 	double distance = 0;
 	if (dist_btw_stop_.count(from.name_) != 0&& dist_btw_stop_.at(from.name_).count(to.name_)!=0) {
@@ -34,23 +34,23 @@ double TransportCatalogue::GetDistBtwStop(Stop& from, Stop& to) {
 	return distance;
 }
 
-Bus* TransportCatalogue::FindeBus(std::string& name_bus){	
+TRANSPORT::DATA::Bus* TRANSPORT::TransportCatalogue::FindeBus(std::string& name_bus){
 	if (bus_.count(name_bus)) {
 		return  &bus_.at(name_bus);		
 	}
 	return nullptr;
 }	
 
-Stop* TransportCatalogue::FindeStop(std::string& name_stop){
+TRANSPORT::DATA::Stop* TRANSPORT::TransportCatalogue::FindeStop(std::string& name_stop){
 	if (stop_.count(name_stop)) {
 		return &stop_.at(name_stop);
 	}
 	return nullptr;
 }	
 
-BusInfo TransportCatalogue::GetBusInfo(std::string& name_bus){
-	BusInfo result_info{ name_bus,0,0,0.0,0.0 };
-	Bus* bus_info= TransportCatalogue::FindeBus(name_bus);
+TRANSPORT::DATA::BusInfo TRANSPORT::TransportCatalogue::GetBusInfo(std::string& name_bus){
+	TRANSPORT::DATA::BusInfo result_info{ name_bus,0,0,0.0,0.0 };
+	TRANSPORT::DATA::Bus* bus_info= TransportCatalogue::FindeBus(name_bus);
 
 	if (bus_info == nullptr) {
 		return result_info;		
@@ -90,9 +90,9 @@ BusInfo TransportCatalogue::GetBusInfo(std::string& name_bus){
 	return result_info;
 }	
 
-StopInfo TransportCatalogue::GetStopInfo(std::string& name_stop) {
+TRANSPORT::DATA::StopInfo TRANSPORT::TransportCatalogue::GetStopInfo(std::string& name_stop) {
 	std::set<std::string> bus_to_stop{};
-	StopInfo result{ name_stop,bus_to_stop,false };
+	TRANSPORT::DATA::StopInfo result{ name_stop,bus_to_stop,false };
 
 	if (bus_to_stop_.count(name_stop) != 0) {		
 		result.name_ = name_stop;
