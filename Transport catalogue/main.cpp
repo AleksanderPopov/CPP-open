@@ -3,10 +3,9 @@
 #include "stat_reader.h"
 #include "transport_catalogue.h"
 
-
 int main()
 {
-    TRANSPORT::TransportCatalogue transport_cat;
-    TRANSPORT::DETAIL::InputReader(transport_cat);   
-    TRANSPORT::DETAIL::OutputReader(transport_cat);
+    transport::TransportCatalogue transport_cat;
+    transport::detail::InputReader(transport_cat);   
+    transport::detail::OutputReader(transport_cat);
 }

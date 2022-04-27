@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-namespace GEO {
+namespace geo {
 
     struct Coordinates {
         double lat;

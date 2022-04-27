@@ -14,9 +14,9 @@
 #include <iterator>
 #include <set>
 
-namespace TRANSPORT {	
+namespace transport {	
 	
-	namespace DATA {
+	namespace data {
 		
 		struct Stop {
 			Stop(std::string name, double latitude, double longitude)
@@ -27,7 +27,7 @@ namespace TRANSPORT {
 			}
 
 			std::string name_;
-			GEO::Coordinates spot_;
+			geo::Coordinates spot_;
 		};
 
 		struct Bus {
@@ -69,20 +69,20 @@ namespace TRANSPORT {
 	class TransportCatalogue {
 	public:
 
-		void AddBus(DATA::Bus& new_bus);
-		void AddStop(DATA::Stop& bus_stop);
+		void AddBus(data::Bus& new_bus);
+		void AddStop(data::Stop& bus_stop);
 		void AddBusToStop(std::string bus, std::set<std::string> bus_to_stops);
-		void AddDistBtwStop(DATA::Stop& from, DATA::Stop& to, double dist);
-		double GetDistBtwStop(DATA::Stop& from, DATA::Stop& to);
-		DATA::Bus* FindeBus(std::string& name_bus);
-		DATA::Stop* FindeStop(std::string& name_stop);
-		DATA::BusInfo GetBusInfo(std::string& name_bus);
-		DATA::StopInfo GetStopInfo(std::string& name_stop);
+		void AddDistBtwStop(data::Stop& from, data::Stop& to, double dist);
+		double GetDistBtwStop(data::Stop& from, data::Stop& to);
+		data::Bus* FindeBus(std::string& name_bus);
+		data::Stop* FindeStop(std::string& name_stop);
+		data::BusInfo GetBusInfo(std::string& name_bus);
+		data::StopInfo GetStopInfo(std::string& name_stop);
 
 	private:
 
-		std::unordered_map<std::string, DATA::Stop> stop_;
-		std::unordered_map<std::string, DATA::Bus> bus_;
+		std::unordered_map<std::string, data::Stop> stop_;
+		std::unordered_map<std::string, data::Bus> bus_;
 		std::unordered_map<std::string, std::set<std::string>> bus_to_stop_;
 		std::unordered_map<std::string, std::unordered_map<std::string, double>> dist_btw_stop_;
 	};

@@ -8,14 +8,14 @@
 #include "transport_catalogue.h"
 #include "input_reader.h"
  
-namespace TRANSPORT {
+namespace transport {
     
-    namespace DETAIL {
+    namespace detail {
 
-        void OutputReader(TRANSPORT::TransportCatalogue& trans_cat);
-
-        std::ostream& operator<<(std::ostream& out, const TRANSPORT::DATA::BusInfo& info);
-        std::ostream& operator<<(std::ostream& out, const TRANSPORT::DATA::StopInfo& info);
+        void OutputReader(transport::TransportCatalogue& transport_catalogue);
+        
+        std::ostream& operator<<(std::ostream& out, const transport::data::BusInfo& info);
+        std::ostream& operator<<(std::ostream& out, const transport::data::StopInfo& info);
 
     }
 }

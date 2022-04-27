@@ -1,6 +1,6 @@
 #include "stat_reader.h"
 
-std::ostream& TRANSPORT::DETAIL::operator<<(std::ostream& out, const TRANSPORT::DATA::BusInfo& info) {
+std::ostream& transport::detail::operator<<(std::ostream& out, const transport::data::BusInfo& info) {
 	if (info.number_stop_ == 0) {
 		out << "Bus " << info.name_ << ": not found";
 		return out;
@@ -13,11 +13,11 @@ std::ostream& TRANSPORT::DETAIL::operator<<(std::ostream& out, const TRANSPORT::
 		out << std::setprecision(6) << info.distance_route_ << " route length, ";
 		out << std::setprecision(6) << info.curvature_ << " curvature";
 	}
-	
+    	
 	return out;
 }
 
-std::ostream& TRANSPORT::DETAIL::operator<<(std::ostream& out, const TRANSPORT::DATA::StopInfo& info) {
+std::ostream& transport::detail::operator<<(std::ostream& out, const transport::data::StopInfo& info) {
 	if (!info.exists_) {
 		out << "Stop " << info.name_ << ": not found";
 		return out;
@@ -35,7 +35,7 @@ std::ostream& TRANSPORT::DETAIL::operator<<(std::ostream& out, const TRANSPORT::
 	return out;
 }
 
-void TRANSPORT::DETAIL::OutputReader(TransportCatalogue& trans_cat) {
+void transport::detail::OutputReader(TransportCatalogue& transport_catalogue) {
 	
 	int query_count;
 	std::cin >> query_count;
@@ -61,13 +61,14 @@ void TRANSPORT::DETAIL::OutputReader(TransportCatalogue& trans_cat) {
 	}
 
 	std::cout << std::flush;
-
-	for (auto queri : all_queries) {
-		if (queri.first == "Stop") {			
-			std::cout << trans_cat.GetStopInfo(queri.second) << std::endl;
+	
+	for (auto [query_type, query_info] : all_queries) {
+		
+		if (query_type == "Stop") {			
+			std::cout << transport_catalogue.GetStopInfo(query_info) << std::endl;
 		}
-		if (queri.first == "Bus") {			
-			std::cout << trans_cat.GetBusInfo(queri.second) << std::endl;
+		if (query_type == "Bus") {			
+			std::cout << transport_catalogue.GetBusInfo(query_info) << std::endl;
 		}
 	}
 }
