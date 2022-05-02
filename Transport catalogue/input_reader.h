@@ -18,6 +18,8 @@ namespace transport {
             std::vector<std::string> query_vector;
         };
 
+        std::unordered_map<std::string, transport::detail::Query> BusQueryParser(std::string& query);
+        std::unordered_map<std::string, transport::detail::Query> StopQueryParser(std::string& query);
         std::unordered_map<std::string, transport::detail::Query> QueryParser(std::string& query);
         void InputReader(transport::TransportCatalogue& transport_catalogue);
     }
