@@ -35,6 +35,16 @@ std::ostream& transport::detail::operator<<(std::ostream& out, const transport::
 	return out;
 }
 
+void transport::detail::PrintBusInfo(transport::TransportCatalogue& transport_catalogue,std::string& query_info){
+	std::cout << transport_catalogue.GetBusInfo(query_info) << std::endl;
+
+}
+
+void transport::detail::PrintStopInfo(transport::TransportCatalogue& transport_catalogue, std::string& query_info) {
+	std::cout << transport_catalogue.GetStopInfo(query_info) << std::endl;
+}
+
+
 void transport::detail::OutputReader(TransportCatalogue& transport_catalogue) {
 	
 	int query_count;
@@ -63,12 +73,12 @@ void transport::detail::OutputReader(TransportCatalogue& transport_catalogue) {
 	std::cout << std::flush;
 	
 	for (auto [query_type, query_info] : all_queries) {
-		
-		if (query_type == "Stop") {			
-			std::cout << transport_catalogue.GetStopInfo(query_info) << std::endl;
+
+		if (query_type == "Stop") {						
+			PrintStopInfo(transport_catalogue,query_info);
 		}
 		if (query_type == "Bus") {			
-			std::cout << transport_catalogue.GetBusInfo(query_info) << std::endl;
+			PrintBusInfo(transport_catalogue, query_info);
 		}
 	}
 }

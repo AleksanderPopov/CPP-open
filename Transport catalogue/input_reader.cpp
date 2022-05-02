@@ -61,15 +61,10 @@ std::unordered_map<std::string, transport::detail::Query> transport::detail::Que
 		int name_stop = query.find_first_of(":") - 1;
 		std::string name = query.substr(name_start + 1,name_stop - name_start);
 
-		int start_lat;
-		int start_lon;
-		int stop_lat;
-		int stop_lon;
-
-		start_lat = query.find_first_of(" ", name_stop) + 1;	
-		stop_lat = query.find_first_of(" ", start_lat) - 1;
-		start_lon = query.find_first_of(",", name_stop) + 2;
-		stop_lon = query.find_first_of(" ", start_lon);		
+		int start_lat = query.find_first_of(" ", name_stop) + 1;	
+		int stop_lat = query.find_first_of(" ", start_lat) - 1;
+		int start_lon = query.find_first_of(",", name_stop) + 2;
+		int stop_lon = query.find_first_of(" ", start_lon);		
 
 		std::string lat_s = query.substr(start_lat,stop_lat - start_lat);
 		std::string lon_s = query.substr(start_lon,stop_lon - 1 - start_lon);  
@@ -182,7 +177,7 @@ void transport::detail::InputReader(transport::TransportCatalogue& transport_cat
 			to_stop = rq_d.substr(0,ptr);
 			dist_str = rq_d.substr(ptr + 1);
 			btw_dist = std::stod(dist_str);
-			transport_catalogue.AddDistBtwStop(*transport_catalogue.FindeStop(query.name), *transport_catalogue.FindeStop(to_stop),btw_dist);
+			transport_catalogue.SetDistBtwStop(*transport_catalogue.FindeStop(query.name), *transport_catalogue.FindeStop(to_stop),btw_dist);
 		}
 	}
 	std::cout << std::flush;

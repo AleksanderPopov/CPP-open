@@ -1,11 +1,11 @@
 #include "transport_catalogue.h"
 
 void transport::TransportCatalogue::AddBus(transport::data::Bus& new_bus){	
-	bus_.emplace(new_bus.name_, new_bus);	
+	bus_byname.emplace(new_bus.name_, new_bus);
 }	
 
 void transport::TransportCatalogue::AddStop(transport::data::Stop& new_stop){
-	stop_.emplace(new_stop.name_, new_stop);
+	stop_byname.emplace(new_stop.name_, new_stop);
 	bus_to_stop_[new_stop.name_];
 }	
 
@@ -15,7 +15,7 @@ void transport::TransportCatalogue::AddBusToStop(std::string name, std::set<std:
 	}
 }
 
-void transport::TransportCatalogue::AddDistBtwStop(transport::data::Stop& from, transport::data::Stop& to, double dist) {
+void transport::TransportCatalogue::SetDistBtwStop(transport::data::Stop& from, transport::data::Stop& to, double dist) {
 	dist_btw_stop_[from.name_].emplace(to.name_, dist);
 }
 
@@ -35,15 +35,15 @@ double transport::TransportCatalogue::GetDistBtwStop(transport::data::Stop& from
 }
 
 transport::data::Bus* transport::TransportCatalogue::FindeBus(std::string& name_bus){
-	if (bus_.count(name_bus)) {
-		return  &bus_.at(name_bus);		
+	if (bus_byname.count(name_bus)) {
+		return  &bus_byname.at(name_bus);
 	}
 	return nullptr;
 }	
 
 transport::data::Stop* transport::TransportCatalogue::FindeStop(std::string& name_stop){
-	if (stop_.count(name_stop)) {
-		return &stop_.at(name_stop);
+	if (stop_byname.count(name_stop)) {
+		return &stop_byname.at(name_stop);
 	}
 	return nullptr;
 }	

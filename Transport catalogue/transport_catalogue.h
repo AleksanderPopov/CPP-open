@@ -72,7 +72,7 @@ namespace transport {
 		void AddBus(data::Bus& new_bus);
 		void AddStop(data::Stop& bus_stop);
 		void AddBusToStop(std::string bus, std::set<std::string> bus_to_stops);
-		void AddDistBtwStop(data::Stop& from, data::Stop& to, double dist);
+		void SetDistBtwStop(data::Stop& from, data::Stop& to, double dist);
 		double GetDistBtwStop(data::Stop& from, data::Stop& to);
 		data::Bus* FindeBus(std::string& name_bus);
 		data::Stop* FindeStop(std::string& name_stop);
@@ -80,9 +80,16 @@ namespace transport {
 		data::StopInfo GetStopInfo(std::string& name_stop);
 
 	private:
-
-		std::unordered_map<std::string, data::Stop> stop_;
-		std::unordered_map<std::string, data::Bus> bus_;
+		//new
+		std::unordered_set<data::Bus> bus_;
+		std::unordered_set<data::Stop> stop_;
+		std::unordered_map<std::string, data::Stop*> stop_byname_ptr;
+		std::unordered_map<std::string, data::Bus*> bus_byname_ptr;
+		std::unordered_map<std::pair<data::Stop*, data::Stop*>, double> dist;
+		// end new
+		
+		std::unordered_map<std::string, data::Stop> stop_byname;
+		std::unordered_map<std::string, data::Bus> bus_byname;
 		std::unordered_map<std::string, std::set<std::string>> bus_to_stop_;
 		std::unordered_map<std::string, std::unordered_map<std::string, double>> dist_btw_stop_;
 	};
