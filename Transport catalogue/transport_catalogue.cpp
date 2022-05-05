@@ -1,15 +1,15 @@
 #include "transport_catalogue.h"
 
-void transport::TransportCatalogue::AddBus(transport::data::Bus& new_bus){	
+void transport::TransportCatalogue::AddBus(const transport::data::Bus& new_bus){	
 	bus_byname.emplace(new_bus.name_, new_bus);
 }	
 
-void transport::TransportCatalogue::AddStop(transport::data::Stop& new_stop){
+void transport::TransportCatalogue::AddStop(const transport::data::Stop& new_stop){
 	stop_byname.emplace(new_stop.name_, new_stop);
 	bus_to_stop_[new_stop.name_];
 }	
 
-void transport::TransportCatalogue::AddBusToStop(std::string name, std::set<std::string> bus_to_stops) {
+void transport::TransportCatalogue::AddBusToStop(const std::string& name,const std::set<std::string>& bus_to_stops) {
 	for (auto stops : bus_to_stops) {		
 		bus_to_stop_[stops].insert(name);
 	}
@@ -34,23 +34,23 @@ double transport::TransportCatalogue::GetDistBtwStop(transport::data::Stop& from
 	return distance;
 }
 
-transport::data::Bus* transport::TransportCatalogue::FindeBus(std::string& name_bus){
+transport::data::Bus* transport::TransportCatalogue::FindBus(const std::string& name_bus){
 	if (bus_byname.count(name_bus)) {
 		return  &bus_byname.at(name_bus);
 	}
 	return nullptr;
 }	
 
-transport::data::Stop* transport::TransportCatalogue::FindeStop(std::string& name_stop){
+transport::data::Stop* transport::TransportCatalogue::FindStop(const std::string& name_stop){
 	if (stop_byname.count(name_stop)) {
 		return &stop_byname.at(name_stop);
 	}
 	return nullptr;
 }	
 
-transport::data::BusInfo transport::TransportCatalogue::GetBusInfo(std::string& name_bus){
+transport::data::BusInfo transport::TransportCatalogue::GetBusInfo(const std::string& name_bus){
 	transport::data::BusInfo result_info{ name_bus,0,0,0.0,0.0 };
-	transport::data::Bus* bus_info= TransportCatalogue::FindeBus(name_bus);
+	transport::data::Bus* bus_info= TransportCatalogue::FindBus(name_bus);
 
 	if (bus_info == nullptr) {
 		return result_info;		
@@ -74,7 +74,7 @@ transport::data::BusInfo transport::TransportCatalogue::GetBusInfo(std::string& 
 	}
 
 	double distance_geo = 0;
-	if (uniq.size() != 1) {
+	if (uniq.size() != 1 && uniq.size()!=0) {
 		for (size_t it = 0; it < bus_info->stop_to_bus_.size() - 1; it++) {
 			distance_geo += GetDistBtwStop(*bus_info->stop_to_bus_[it], *bus_info->stop_to_bus_[it + 1]);
 		}
@@ -90,7 +90,7 @@ transport::data::BusInfo transport::TransportCatalogue::GetBusInfo(std::string& 
 	return result_info;
 }	
 
-transport::data::StopInfo transport::TransportCatalogue::GetStopInfo(std::string& name_stop) {
+transport::data::StopInfo transport::TransportCatalogue::GetStopInfo(const std::string& name_stop) {
 	std::set<std::string> bus_to_stop{};
 	transport::data::StopInfo result{ name_stop,bus_to_stop,false };
 

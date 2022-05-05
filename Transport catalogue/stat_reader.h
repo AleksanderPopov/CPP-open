@@ -16,8 +16,8 @@ namespace transport {
         std::ostream& operator<<(std::ostream& out, const transport::data::StopInfo& info);
         
         void OutputReader(transport::TransportCatalogue& transport_catalogue);
-        void PrintBusInfo(transport::TransportCatalogue& transport_catalogue,std::string& query_type);
-        void PrintStopInfo(transport::TransportCatalogue& transport_catalogue, std::string& query_type);
+        void PrintBusInfo(transport::TransportCatalogue& transport_catalogue,const std::string& query_info);
+        void PrintStopInfo(transport::TransportCatalogue& transport_catalogue,const std::string& query_info);
 
     }
 }

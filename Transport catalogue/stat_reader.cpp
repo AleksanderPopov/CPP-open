@@ -35,12 +35,12 @@ std::ostream& transport::detail::operator<<(std::ostream& out, const transport::
 	return out;
 }
 
-void transport::detail::PrintBusInfo(transport::TransportCatalogue& transport_catalogue,std::string& query_info){
+void transport::detail::PrintBusInfo(transport::TransportCatalogue& transport_catalogue,const std::string& query_info){
 	std::cout << transport_catalogue.GetBusInfo(query_info) << std::endl;
 
 }
 
-void transport::detail::PrintStopInfo(transport::TransportCatalogue& transport_catalogue, std::string& query_info) {
+void transport::detail::PrintStopInfo(transport::TransportCatalogue& transport_catalogue,const std::string& query_info) {
 	std::cout << transport_catalogue.GetStopInfo(query_info) << std::endl;
 }
 

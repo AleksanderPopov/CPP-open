@@ -69,23 +69,23 @@ namespace transport {
 	class TransportCatalogue {
 	public:
 
-		void AddBus(data::Bus& new_bus);
-		void AddStop(data::Stop& bus_stop);
-		void AddBusToStop(std::string bus, std::set<std::string> bus_to_stops);
+		void AddBus(const data::Bus& new_bus);
+		void AddStop(const data::Stop& bus_stop);
+		void AddBusToStop(const std::string& bus,const std::set<std::string>& bus_to_stops);
 		void SetDistBtwStop(data::Stop& from, data::Stop& to, double dist);
 		double GetDistBtwStop(data::Stop& from, data::Stop& to);
-		data::Bus* FindeBus(std::string& name_bus);
-		data::Stop* FindeStop(std::string& name_stop);
-		data::BusInfo GetBusInfo(std::string& name_bus);
-		data::StopInfo GetStopInfo(std::string& name_stop);
+		data::Bus* FindBus(const std::string& name_bus);
+		data::Stop* FindStop(const std::string& name_stop);
+		data::BusInfo GetBusInfo(const std::string& name_bus);
+		data::StopInfo GetStopInfo(const std::string& name_stop);
 
 	private:
 		//new
-		std::unordered_set<data::Bus> bus_;
-		std::unordered_set<data::Stop> stop_;
-		std::unordered_map<std::string, data::Stop*> stop_byname_ptr;
-		std::unordered_map<std::string, data::Bus*> bus_byname_ptr;
-		std::unordered_map<std::pair<data::Stop*, data::Stop*>, double> dist;
+		//std::deque<data::Bus> bus_;
+		//std::deque<data::Stop> stop_;
+		//std::unordered_map<std::string, data::Stop*> stop_byname_ptr;
+		//std::unordered_map<std::string, data::Bus*> bus_byname_ptr;
+		//std::unordered_map<std::pair<data::Stop*, data::Stop*>, double> dist;
 		// end new
 		
 		std::unordered_map<std::string, data::Stop> stop_byname;

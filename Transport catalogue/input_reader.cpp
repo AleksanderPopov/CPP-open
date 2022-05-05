@@ -1,6 +1,6 @@
 #include "input_reader.h"
 
-std::unordered_map<std::string, transport::detail::Query> transport::detail::BusQueryParser(std::string& query) {
+std::unordered_map<std::string, transport::detail::Query> transport::detail::BusQueryParser(const std::string& query) {
 	std::unordered_map<std::string, Query> query_processing;
 	Query complit_parsing_query;
 
@@ -53,7 +53,7 @@ std::unordered_map<std::string, transport::detail::Query> transport::detail::Bus
 	return query_processing;
 }
 
-std::unordered_map<std::string, transport::detail::Query> transport::detail::StopQueryParser(std::string& query) {
+std::unordered_map<std::string, transport::detail::Query> transport::detail::StopQueryParser(const std::string& query) {
 	std::unordered_map<std::string, Query> query_processing;
 	Query complit_parsing_query;
 
@@ -114,7 +114,7 @@ std::unordered_map<std::string, transport::detail::Query> transport::detail::Sto
 	return query_processing;
 }
 
-std::unordered_map<std::string, transport::detail::Query> transport::detail::QueryParser(std::string& query) {
+std::unordered_map<std::string, transport::detail::Query> transport::detail::QueryParser(const std::string& query) {
 	
 	std::unordered_map<std::string, Query> query_processing;
 
@@ -160,25 +160,25 @@ void transport::detail::InputReader(transport::TransportCatalogue& transport_cat
 		}
 	}
 
-	for (auto queri : stop_query) {
+	for (auto query : stop_query) {
 
-		transport::data::Stop tmp(queri.name ,std::stod(queri.query_vector[0]) ,std::stod(queri.query_vector[1]) );
+		transport::data::Stop tmp(query.name ,std::stod(query.query_vector[0]) ,std::stod(query.query_vector[1]) );
 		transport_catalogue.AddStop(tmp);
 	}
 
-	for (auto queri : bus_query) {
+	for (auto query : bus_query) {
 		std::deque<transport::data::Stop*> stop_v;
 		
 		std::set<std::string> to_stops;
 		
-		for (auto rq : queri.query_vector) {
-			stop_v.push_back(transport_catalogue.FindeStop(rq));
-			to_stops.insert(transport_catalogue.FindeStop(rq)->name_);			
+		for (auto rq : query.query_vector) {
+			stop_v.push_back(transport_catalogue.FindStop(rq));
+			to_stops.insert(transport_catalogue.FindStop(rq)->name_);			
 		}
-		transport::data::Bus bus_tmp(queri.name, stop_v);
+		transport::data::Bus bus_tmp(query.name, stop_v);
 		transport_catalogue.AddBus(bus_tmp);
 
-		transport_catalogue.AddBusToStop(queri.name,to_stops);
+		transport_catalogue.AddBusToStop(query.name,to_stops);
 	}
 
 	for (auto query : distance_query) {
@@ -192,7 +192,7 @@ void transport::detail::InputReader(transport::TransportCatalogue& transport_cat
 			to_stop = rq_d.substr(0,ptr);
 			dist_str = rq_d.substr(ptr + 1);
 			btw_dist = std::stod(dist_str);
-			transport_catalogue.SetDistBtwStop(*transport_catalogue.FindeStop(query.name), *transport_catalogue.FindeStop(to_stop),btw_dist);
+			transport_catalogue.SetDistBtwStop(*transport_catalogue.FindStop(query.name), *transport_catalogue.FindStop(to_stop),btw_dist);
 		}
 	}
 	std::cout << std::flush;
