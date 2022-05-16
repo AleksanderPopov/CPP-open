@@ -1,0 +1,162 @@
+13
+Stop Tolstopaltsevo: 55.611087, 37.20829, 3900m to Marushkino
+Stop Marushkino: 55.595884, 37.209755, 9900m to Rasskazovka, 100m to Marushkino
+Bus 256: Biryulyovo Zapadnoye > Biryusinka > Universam > Biryulyovo Tovarnaya > Biryulyovo Passazhirskaya > Biryulyovo Zapadnoye
+Bus 750: Tolstopaltsevo - Marushkino - Marushkino - Rasskazovka
+Stop Rasskazovka: 55.632761, 37.333324, 9500m to Marushkino
+Stop Biryulyovo Zapadnoye: 55.574371, 37.6517, 7500m to Rossoshanskaya ulitsa, 1800m to Biryusinka, 2400m to Universam
+Stop Biryusinka: 55.581065, 37.64839, 750m to Universam
+Stop Universam: 55.587655, 37.645687, 5600m to Rossoshanskaya ulitsa, 900m to Biryulyovo Tovarnaya
+Stop Biryulyovo Tovarnaya: 55.592028, 37.653656, 1300m to Biryulyovo Passazhirskaya
+Stop Biryulyovo Passazhirskaya: 55.580999, 37.659164, 1200m to Biryulyovo Zapadnoye
+Bus 828: Biryulyovo Zapadnoye > Universam > Rossoshanskaya ulitsa > Biryulyovo Zapadnoye
+Stop Rossoshanskaya ulitsa: 55.595579, 37.605757
+Stop Prazhskaya: 55.611678, 37.603831
+6
+Bus 256
+Bus 750
+Bus 751
+Stop Samara
+Stop Prazhskaya
+Stop Biryulyovo Zapadnoye
+
+
+
+
+4
+Bus 750: Tolstopaltsevo - Marushkino - Marushkino - Rasskazovka
+Stop Marushkino: 55.595884, 37.209755, 9900m to Rasskazovka, 100m to Marushkino
+Stop Tolstopaltsevo: 55.611087, 37.20829, 3900m to Marushkino
+Stop Rasskazovka: 55.632761, 37.333324, 9500m to Marushkino
+
+3
+Stop Marushkino
+Bus 750
+Stop Biryulyovo Zapadnoye
+
+
+void TestRouteName()
+{
+    std::vector<std::string> routes{"Bus A: B - C - D",
+                                   "Bus A B CD: C - D - B"};
+
+    std::vector<std::string> stops{"Stop B: 55.632761, 37.333324",
+                                   "Stop C: 52.632761, 32.333324",
+                                   "Stop D: 15.632761, 17.333324",};                           
+    
+    InputReader reader;
+
+    reader.GetQueries(std::move(stops), std::move(routes));
+
+    TransportCatalogue catalogue(reader.GetRoutes(), reader.GetStops());
+
+    assert(catalogue.GetRoute("A") != nullptr);
+    assert(catalogue.GetRoute("A")->name_ == "A");
+
+    assert(catalogue.GetRoute("A B CD") != nullptr);
+    assert(catalogue.GetRoute("A B CD")->name_ == "A B CD");
+}
+
+void TestStopsName()
+{
+    std::vector<std::string> routes{"Bus A: BC A DE - CB D - DEFG - G"};
+
+    std::vector<std::string> stops{"Stop BC A DE: 55.632761, 37.333324",
+                                   "Stop CB D: 52.632761, 32.333324",
+                                   "Stop DEFG: 15.632761, 17.333324",
+                                   "Stop G: 11.632761, 11.333324"};                           
+    
+    InputReader reader;
+
+    reader.GetQueries(std::move(stops), std::move(routes));
+
+    TransportCatalogue catalogue(reader.GetRoutes(), reader.GetStops());
+
+    assert(catalogue.GetRoute("A") != nullptr);
+
+    std::vector<std::string> stop_names{"BC A DE",
+                                        "CB D",
+                                        "DEFG",
+                                        "G",
+                                        "DEFG",
+                                        "CB D",
+                                        "BC A DE"};
+
+    for(auto i = 0; i < stop_names.size(); i++)
+    {
+        assert(catalogue.GetRoute("A")->route_[i]->name_ == stop_names[i]);
+    }
+}
+
+void TestAddRouteBeforeStops()
+{
+    std::stringstream ss("");
+    ss << "Bus 256 123-21: Biryulyovo Zapadnoye > Biryusinka > Biryulyovo Zapadnoye\n";
+    ss << "Bus 750: Tolstopaltsevo - Marushkino - Rasskazovka\n";
+    ss << "Bus 752: Tolstopaltsevo - Marushkino\n";
+    ss << "Stop Tolstopaltsevo: 55.611087, 37.208290\n";
+    ss << "Stop Marushkino: 55.595884, 37.209755\n";
+    ss << "Stop Rasskazovka: 55.632761, 37.333324\n";
+    ss << "Stop Biryulyovo Zapadnoye: 55.574371, 37.651700\n";
+    ss << "Stop Biryusinka: 55.581065, 37.648390\n";
+
+    std::vector<std::string> stops_strings;
+    std::vector<std::string> bus_strings;
+
+    std::string str;
+    //std::getline(ss, str);
+
+    for(int i = 0; i < 8; i++)
+    {
+        std::getline(ss, str);
+
+        if(ToLower(str.substr(0, str.find(' '))) == "bus")
+        {
+            bus_strings.push_back(str);
+        }
+        else
+        {
+            stops_strings.push_back(str);
+        }
+    }
+
+    InputReader reader;
+
+    reader.GetQueries(std::move(stops_strings), std::move(bus_strings));
+
+    auto routes = reader.GetRoutes();
+
+    assert(routes.find({"256 123-21", {0, 0}})->route_.size() == 3);
+    assert(routes.find({"750", {0, 0}})->route_.size() == 5);
+    assert(routes.find({"752", {0, 0}})->route_.size() == 3);
+}
+
+
+
+        size_t c1x = dumbbell.circle1.x * (37 ^ 1);
+        size_t c1y = dumbbell.circle1.y * (37 ^ 2);
+        size_t c1r = dumbbell.circle1.r * (37 ^ 3);
+        size_t c2x = dumbbell.circle1.x * (37 ^ 4);
+        size_t c2y = dumbbell.circle1.y * (37 ^ 5);
+        size_t c2r = dumbbell.circle1.r * (37 ^ 6);
+        size_t txt1 = hasher_(dumbbell.text.size()) * (37 ^ 7); 
+        size_t txt2 = hasher_(dumbbell.text[dumbbell.text.size() / 2] * (37 ^ 8));
+        return c1x + c1y + c1r + c2x + c2y + c2r + txt1 + txt2;
+		
+		
+		
+        hash<string> str_hash;
+        size_t tmp1 = dmb.circle1.r*41 + dmb.circle1.x*43*43 + dmb.circle1.y*47*47*47;
+        size_t tmp2 = dmb.circle2.r*53 + dmb.circle2.x*59*59 + dmb.circle2.y*61*61*61;
+        size_t tmp3 = str_hash(dmb.text);
+        size_t res = tmp1 + tmp2 + tmp3;
+		
+		
+		size_t c1x = dmb.circle1.x * 41 ;
+        size_t c1y = dmb.circle1.y * 43*43;
+        size_t c1r = dmb.circle1.r * 47*47*47;
+        size_t c2x = dmb.circle1.x * 53;
+        size_t c2y = dmb.circle1.y * 59*59;
+        size_t c2r = dmb.circle1.r * 61*61*61;
+            hash<string> str_hash;
+        size_t tmp3 = str_hash(dmb.text);
