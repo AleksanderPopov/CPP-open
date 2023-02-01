@@ -49,7 +49,7 @@ transport::data::Stop* transport::TransportCatalogue::FindStop(const std::string
 }	
 
 transport::data::BusInfo transport::TransportCatalogue::GetBusInfo(const std::string& name_bus){
-	transport::data::BusInfo result_info{ name_bus,0,0,0.0,0.0 };
+	transport::data::BusInfo result_info{ name_bus, 0, 0, 0.0, 0.0 };
 	transport::data::Bus* bus_info= TransportCatalogue::FindBus(name_bus);
 
 	if (bus_info == nullptr) {
@@ -83,7 +83,9 @@ transport::data::BusInfo transport::TransportCatalogue::GetBusInfo(const std::st
 	{
 		distance_geo += GetDistBtwStop(*bus_info->stop_to_bus_[0], *bus_info->stop_to_bus_[0]);
 	}
-
+	if (bus_info->busloop_) {
+		result_info.loop_ = true;
+	}
 	result_info.distance_route_ = distance_geo;			
 	result_info.curvature_ = distance_geo / distance;		
 

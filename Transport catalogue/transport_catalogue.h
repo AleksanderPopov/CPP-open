@@ -38,7 +38,7 @@ namespace transport {
 
 			std::string name_;
 			std::deque<Stop*> stop_to_bus_;
-
+			bool busloop_=false;
 		};
 
 		struct BusInfo {
@@ -52,6 +52,7 @@ namespace transport {
 			int uniq_number_stop_;
 			double distance_route_;
 			double curvature_;
+			bool loop_=false;
 		};
 
 		struct StopInfo {
@@ -79,23 +80,10 @@ namespace transport {
 		data::BusInfo GetBusInfo(const std::string& name_bus);
 		data::StopInfo GetStopInfo(const std::string& name_stop);
 
-	private:
-		//new
-		//std::deque<data::Bus> bus_;
-		//std::deque<data::Stop> stop_;
-		//std::unordered_map<std::string, data::Stop*> stop_byname_ptr;
-		//std::unordered_map<std::string, data::Bus*> bus_byname_ptr;
-		//std::unordered_map<std::pair<data::Stop*, data::Stop*>, double> dist;
-		// end new
-		
+	private:		
 		std::unordered_map<std::string, data::Stop> stop_byname;
 		std::unordered_map<std::string, data::Bus> bus_byname;
 		std::unordered_map<std::string, std::set<std::string>> bus_to_stop_;
 		std::unordered_map<std::string, std::unordered_map<std::string, double>> dist_btw_stop_;
 	};
 }
-
-
-
-
-
