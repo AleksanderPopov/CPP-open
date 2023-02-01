@@ -77,9 +77,9 @@ void JsonReader::AddingBus(const Dict& bus) {
     }
     else
     {
-        for (auto& kek : stope) {           
-            stop_to_bus.push_back(catalog_.FindStop(kek.AsString()));
-            to_stops.insert(catalog_.FindStop(kek.AsString())->name_);
+        for (auto& stp : stope) {           
+            stop_to_bus.push_back(catalog_.FindStop(stp.AsString()));
+            to_stops.insert(catalog_.FindStop(stp.AsString())->name_);
            
         }
         int ptr = stop_to_bus.size() - 1;
