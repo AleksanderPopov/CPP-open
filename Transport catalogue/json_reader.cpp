@@ -68,9 +68,9 @@ void JsonReader::AddingBus(const Dict& bus) {
     std::deque<transport::data::Stop*> stop_to_bus;
     std::set<std::string> to_stops;
     if (bus.at("is_roundtrip"s).AsBool()){
-        for (auto& kek : stope) {
-            stop_to_bus.push_back(catalog_.FindStop(kek.AsString()));
-            to_stops.insert(catalog_.FindStop(kek.AsString())->name_);
+        for (auto& stp : stope) {
+            stop_to_bus.push_back(catalog_.FindStop(stp.AsString()));
+            to_stops.insert(catalog_.FindStop(stp.AsString())->name_);
            
         }
         stop_to_bus.push_back(stop_to_bus[0]);
