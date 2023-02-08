@@ -14,7 +14,7 @@
 На вход подается JSON с необходимыми данными. На выход JSON с ответами на запросы.
 Примеры входных https://github.com/AleksanderPopov/CPP-open/blob/main/Transport%20catalogue/input.json
       и выходных https://github.com/AleksanderPopov/CPP-open/blob/main/Transport%20catalogue/output.json файлов.
- * вариант запроса main_json.exe <input.json 1>output.json 2>cerr.txt
+ * вариант запроса:  main_json.exe <input.json 1>output.json 2>cerr.txt
 
 Планы развития программы:
 * Вывод карты маршрутов на основе данных SVG формата. Необходимая библиотека по формированию SVG разработана и протестирована.
