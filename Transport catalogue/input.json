@@ -1,0 +1,70 @@
+{
+  "base_requests": [
+    {
+      "type": "Bus",
+      "name": "114",
+      "stops": ["Морской вокзал", "Ривьерский мост","Ривьерский вокзал"],
+      "is_roundtrip": true
+    },
+	{
+      "type": "Bus",
+      "name": "115",
+      "stops": ["Ривьерский вокзал","Ривьерский мост","Морской вокзал"],
+      "is_roundtrip": false
+    },
+		{
+      "type": "Bus",
+      "name": "116",
+      "stops": ["Ривьерский вокзал","Ривьерский мост"],
+      "is_roundtrip": true
+    },
+		{
+      "type": "Bus",
+      "name": "117",
+      "stops": ["Ривьерский вокзал","Ривьерский мост","Морской вокзал","Stop 100", "Stop 200"],
+      "is_roundtrip": true
+    },
+    {
+      "type": "Stop",
+      "name": "Ривьерский мост",
+      "latitude": 43.587795,
+      "longitude": 39.716901,
+      "road_distances": {"Морской вокзал": 750,"Ривьерский вокзал": 300}
+    },
+    {
+      "type": "Stop",
+      "name": "Морской вокзал",
+      "latitude": 43.581969,
+      "longitude": 39.719848,
+      "road_distances": {"Ривьерский мост": 850,"Ривьерский вокзал": 400,"Stop 100": 400}
+    },
+	{
+      "type": "Stop",
+      "name": "Ривьерский вокзал",
+      "latitude": 43.581970,
+      "longitude": 39.716921,
+      "road_distances": {"Ривьерский мост": 500,"Морской вокзал": 700}
+    },
+    {
+      "type": "Stop",
+      "name": "Stop 100",
+      "latitude": 43.581969,
+      "longitude": 39.719848,
+      "road_distances": {"Морской вокзал": 850,"Stop 200": 400}
+    },
+    {
+      "type": "Stop",
+      "name": "Stop 200",
+      "latitude": 43.581969,
+      "longitude": 39.719848,
+      "road_distances": {"Ривьерский вокзал": 850,"Stop 100": 400}
+    }
+  ],
+  "stat_requests": [
+    { "id": 1, "type": "Stop", "name": "Ривьерский мост" },	
+    { "id": 2, "type": "Bus", "name": "114" },
+	{ "id": 3, "type": "Bus", "name": "115" },
+	{ "id": 4, "type": "Bus", "name": "116" },
+	{ "id": 5, "type": "Bus", "name": "117" }
+  ]
+} 

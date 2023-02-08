@@ -1,0 +1,39 @@
+[
+    {
+        "buses": [
+            "114",
+            "115",
+            "116",
+            "117"
+        ],
+        "request_id": 1
+    },
+    {
+        "curvature": 1.17579,
+        "request_id": 2,
+        "route_length": 1850,
+        "stop_count": 3,
+        "unique_stop_count": 3
+    },
+    {
+        "curvature": 0.897095,
+        "request_id": 3,
+        "route_length": 2400,
+        "stop_count": 5,
+        "unique_stop_count": 3
+    },
+    {
+        "curvature": 0.617558,
+        "request_id": 4,
+        "route_length": 800,
+        "stop_count": 2,
+        "unique_stop_count": 2
+    },
+    {
+        "curvature": 1.84312,
+        "request_id": 5,
+        "route_length": 2900,
+        "stop_count": 5,
+        "unique_stop_count": 5
+    }
+]
