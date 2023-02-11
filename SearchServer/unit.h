@@ -98,26 +98,26 @@ void TestAddDocuments() {
 
     {
         SearchServer server(""s);
-        server.AddDocument(0, "белый кот и модный ошейник"s, DocumentStatus::ACTUAL, { 8, -3 });
-        server.AddDocument(1, "пушистый кот пушистый хвост"s, DocumentStatus::ACTUAL, { 7, 2, 7 });
-        server.AddDocument(2, "ухоженный пёс выразительные глаза"s, DocumentStatus::ACTUAL, { 5, -12, 2, 1 });
-        server.AddDocument(3, "ухоженный скворец евгений"s, DocumentStatus::BANNED, { 9 });
+        server.AddDocument(0, "Р±РµР»С‹Р№ РєРѕС‚ Рё РјРѕРґРЅС‹Р№ РѕС€РµР№РЅРёРє"s, DocumentStatus::ACTUAL, { 8, -3 });
+        server.AddDocument(1, "РїСѓС€РёСЃС‚С‹Р№ РєРѕС‚ РїСѓС€РёСЃС‚С‹Р№ С…РІРѕСЃС‚"s, DocumentStatus::ACTUAL, { 7, 2, 7 });
+        server.AddDocument(2, "СѓС…РѕР¶РµРЅРЅС‹Р№ РїС‘СЃ РІС‹СЂР°Р·РёС‚РµР»СЊРЅС‹Рµ РіР»Р°Р·Р°"s, DocumentStatus::ACTUAL, { 5, -12, 2, 1 });
+        server.AddDocument(3, "СѓС…РѕР¶РµРЅРЅС‹Р№ СЃРєРІРѕСЂРµС† РµРІРіРµРЅРёР№"s, DocumentStatus::BANNED, { 9 });
         ASSERT_EQUAL(server.GetDocumentCount(), 4u);
-        ASSERT_EQUAL(server.FindTopDocuments("кот"s).size(), 2u);
-        ASSERT_EQUAL(server.FindTopDocuments("ухоженный"s).size(), 1u);
+        ASSERT_EQUAL(server.FindTopDocuments("РєРѕС‚"s).size(), 2u);
+        ASSERT_EQUAL(server.FindTopDocuments("СѓС…РѕР¶РµРЅРЅС‹Р№"s).size(), 1u);
     }
 
 }
 
 void TestStopWords() {
-    SearchServer server("и в на кот"s);
+    SearchServer server("Рё РІ РЅР° РєРѕС‚"s);
 
-    server.AddDocument(10, "белый кот и модный ошейник"s, DocumentStatus::ACTUAL, { 8, -3 });
-    server.AddDocument(5, "пушистый кот пушистый хвост кот"s, DocumentStatus::ACTUAL, { 7, 2, 7 });
-    server.AddDocument(8, "ухоженный пёс выразительные глаза"s, DocumentStatus::ACTUAL, { 5, -12, 2, 1 });
-    server.AddDocument(12, "на и в"s, DocumentStatus::ACTUAL, { 8, -1, 6, 7 });
+    server.AddDocument(10, "Р±РµР»С‹Р№ РєРѕС‚ Рё РјРѕРґРЅС‹Р№ РѕС€РµР№РЅРёРє"s, DocumentStatus::ACTUAL, { 8, -3 });
+    server.AddDocument(5, "РїСѓС€РёСЃС‚С‹Р№ РєРѕС‚ РїСѓС€РёСЃС‚С‹Р№ С…РІРѕСЃС‚ РєРѕС‚"s, DocumentStatus::ACTUAL, { 7, 2, 7 });
+    server.AddDocument(8, "СѓС…РѕР¶РµРЅРЅС‹Р№ РїС‘СЃ РІС‹СЂР°Р·РёС‚РµР»СЊРЅС‹Рµ РіР»Р°Р·Р°"s, DocumentStatus::ACTUAL, { 5, -12, 2, 1 });
+    server.AddDocument(12, "РЅР° Рё РІ"s, DocumentStatus::ACTUAL, { 8, -1, 6, 7 });
 
-    const auto docs = server.FindTopDocuments("ухоженный кот"s);
+    const auto docs = server.FindTopDocuments("СѓС…РѕР¶РµРЅРЅС‹Р№ РєРѕС‚"s);
     int doc_id = 8;
     const Document& doc0 = docs[0];
     ASSERT_EQUAL(docs.size(), 1u);
@@ -142,13 +142,13 @@ void TestMatching() {
 }
 
 void TestMinusWord() {
-    SearchServer server("и в на"s);
+    SearchServer server("Рё РІ РЅР°"s);
 
-    server.AddDocument(10, "белый кот и модный ошейник"s, DocumentStatus::ACTUAL, { 8, -3 });
-    server.AddDocument(5, "пушистый кот пушистый хвост кот"s, DocumentStatus::ACTUAL, { 7, 2, 7 });
-    server.AddDocument(8, "ухоженный пёс выразительные глаза"s, DocumentStatus::ACTUAL, { 5, -12, 2, 1 });
+    server.AddDocument(10, "Р±РµР»С‹Р№ РєРѕС‚ Рё РјРѕРґРЅС‹Р№ РѕС€РµР№РЅРёРє"s, DocumentStatus::ACTUAL, { 8, -3 });
+    server.AddDocument(5, "РїСѓС€РёСЃС‚С‹Р№ РєРѕС‚ РїСѓС€РёСЃС‚С‹Р№ С…РІРѕСЃС‚ РєРѕС‚"s, DocumentStatus::ACTUAL, { 7, 2, 7 });
+    server.AddDocument(8, "СѓС…РѕР¶РµРЅРЅС‹Р№ РїС‘СЃ РІС‹СЂР°Р·РёС‚РµР»СЊРЅС‹Рµ РіР»Р°Р·Р°"s, DocumentStatus::ACTUAL, { 5, -12, 2, 1 });
 
-    const auto docs = server.FindTopDocuments("ухоженный кот -пёс"s);
+    const auto docs = server.FindTopDocuments("СѓС…РѕР¶РµРЅРЅС‹Р№ РєРѕС‚ -РїС‘СЃ"s);
     ASSERT_EQUAL(docs.size(), 2u);
 
     const Document& doc0 = docs[0];
@@ -161,16 +161,16 @@ void TestMinusWord() {
 void TestReiting() {
     SearchServer server(""s);
     std::vector<int> rating1 = { 8, -3 };
-    server.AddDocument(10, "белый кот и модный ошейник"s, DocumentStatus::ACTUAL, rating1);
+    server.AddDocument(10, "Р±РµР»С‹Р№ РєРѕС‚ Рё РјРѕРґРЅС‹Р№ РѕС€РµР№РЅРёРє"s, DocumentStatus::ACTUAL, rating1);
 
     std::vector<int> rating2 = { 7, 2, 7 };
-    server.AddDocument(5, "пушистый кот пушистый хвост кот"s, DocumentStatus::ACTUAL, rating2);
+    server.AddDocument(5, "РїСѓС€РёСЃС‚С‹Р№ РєРѕС‚ РїСѓС€РёСЃС‚С‹Р№ С…РІРѕСЃС‚ РєРѕС‚"s, DocumentStatus::ACTUAL, rating2);
 
     std::vector<int> rating3 = { 5, -12, 2, 1 };
-    server.AddDocument(8, "ухоженный пёс выразительные глаза"s, DocumentStatus::ACTUAL, rating3);
+    server.AddDocument(8, "СѓС…РѕР¶РµРЅРЅС‹Р№ РїС‘СЃ РІС‹СЂР°Р·РёС‚РµР»СЊРЅС‹Рµ РіР»Р°Р·Р°"s, DocumentStatus::ACTUAL, rating3);
 
     std::vector<int> rating4 = { 9 };
-    server.AddDocument(3, "ухоженный скворец евгений"s, DocumentStatus::ACTUAL, rating4);
+    server.AddDocument(3, "СѓС…РѕР¶РµРЅРЅС‹Р№ СЃРєРІРѕСЂРµС† РµРІРіРµРЅРёР№"s, DocumentStatus::ACTUAL, rating4);
 
 
     int sum1 = std::accumulate(rating1.begin(), rating1.end(), 0);
@@ -186,7 +186,7 @@ void TestReiting() {
     int rait4 = sum4 / static_cast<int>(rating4.size());
 
 
-    const auto docs2 = server.FindTopDocuments("ухоженный кот"s);
+    const auto docs2 = server.FindTopDocuments("СѓС…РѕР¶РµРЅРЅС‹Р№ РєРѕС‚"s);
     ASSERT_EQUAL(docs2.size(), 4u);
     ASSERT_EQUAL(docs2[0].rating, rait2);
     ASSERT_EQUAL(docs2[1].rating, rait4);
@@ -198,20 +198,20 @@ void TestStatus() {
 
     SearchServer server(""s);
 
-    server.AddDocument(10, "белый кот и модный ошейник"s, DocumentStatus::ACTUAL, { 8, -3 });
-    server.AddDocument(5, "пушистый кот пушистый хвост кот"s, DocumentStatus::REMOVED, { 7, 2, 7 });
-    server.AddDocument(8, "ухоженный пёс выразительные глаза"s, DocumentStatus::REMOVED, { 5, -12, 2, 1 });
-    server.AddDocument(3, "ухоженный скворец евгений"s, DocumentStatus::BANNED, { 9 });
-    server.AddDocument(15, "ухоженный скворец евгений"s, DocumentStatus::IRRELEVANT, { 5 });
+    server.AddDocument(10, "Р±РµР»С‹Р№ РєРѕС‚ Рё РјРѕРґРЅС‹Р№ РѕС€РµР№РЅРёРє"s, DocumentStatus::ACTUAL, { 8, -3 });
+    server.AddDocument(5, "РїСѓС€РёСЃС‚С‹Р№ РєРѕС‚ РїСѓС€РёСЃС‚С‹Р№ С…РІРѕСЃС‚ РєРѕС‚"s, DocumentStatus::REMOVED, { 7, 2, 7 });
+    server.AddDocument(8, "СѓС…РѕР¶РµРЅРЅС‹Р№ РїС‘СЃ РІС‹СЂР°Р·РёС‚РµР»СЊРЅС‹Рµ РіР»Р°Р·Р°"s, DocumentStatus::REMOVED, { 5, -12, 2, 1 });
+    server.AddDocument(3, "СѓС…РѕР¶РµРЅРЅС‹Р№ СЃРєРІРѕСЂРµС† РµРІРіРµРЅРёР№"s, DocumentStatus::BANNED, { 9 });
+    server.AddDocument(15, "СѓС…РѕР¶РµРЅРЅС‹Р№ СЃРєРІРѕСЂРµС† РµРІРіРµРЅРёР№"s, DocumentStatus::IRRELEVANT, { 5 });
 
-    ASSERT_EQUAL(server.FindTopDocuments("ухоженный кот"s, DocumentStatus::BANNED).size(), 1u);
-    ASSERT_EQUAL(server.FindTopDocuments("евгений"s, DocumentStatus::IRRELEVANT).size(), 1u);
+    ASSERT_EQUAL(server.FindTopDocuments("СѓС…РѕР¶РµРЅРЅС‹Р№ РєРѕС‚"s, DocumentStatus::BANNED).size(), 1u);
+    ASSERT_EQUAL(server.FindTopDocuments("РµРІРіРµРЅРёР№"s, DocumentStatus::IRRELEVANT).size(), 1u);
 
-    const auto docs1 = server.FindTopDocuments("ухоженный кот"s, DocumentStatus::ACTUAL);
+    const auto docs1 = server.FindTopDocuments("СѓС…РѕР¶РµРЅРЅС‹Р№ РєРѕС‚"s, DocumentStatus::ACTUAL);
     const Document& doc0 = docs1[0];
     ASSERT((docs1.size() == 1) && (doc0.id == 10));
 
-    const auto docs2 = server.FindTopDocuments("ухоженный кот"s, DocumentStatus::REMOVED);
+    const auto docs2 = server.FindTopDocuments("СѓС…РѕР¶РµРЅРЅС‹Р№ РєРѕС‚"s, DocumentStatus::REMOVED);
     ASSERT_EQUAL(docs2.size(), 2u);
     ASSERT_EQUAL(docs2[0].id, 5u);
     ASSERT_EQUAL(docs2[1].id, 8u);
@@ -220,14 +220,14 @@ void TestStatus() {
 
 void TestRelevance() {                                      
 
-    SearchServer search_server("и в на"s);
+    SearchServer search_server("Рё РІ РЅР°"s);
     const double TestValues[3] = { 0.274653, 0.162186, 0.101366 };                      
 
-    search_server.AddDocument(10, "белый кот и модный ошейник"s, DocumentStatus::ACTUAL, { 8, -3 });
-    search_server.AddDocument(5, "пушистый кот пушистый хвост кот"s, DocumentStatus::ACTUAL, { 7, 2, 7 });
-    search_server.AddDocument(8, "ухоженный пёс выразительные глаза"s, DocumentStatus::ACTUAL, { 5, -12, 2, 1 });
+    search_server.AddDocument(10, "Р±РµР»С‹Р№ РєРѕС‚ Рё РјРѕРґРЅС‹Р№ РѕС€РµР№РЅРёРє"s, DocumentStatus::ACTUAL, { 8, -3 });
+    search_server.AddDocument(5, "РїСѓС€РёСЃС‚С‹Р№ РєРѕС‚ РїСѓС€РёСЃС‚С‹Р№ С…РІРѕСЃС‚ РєРѕС‚"s, DocumentStatus::ACTUAL, { 7, 2, 7 });
+    search_server.AddDocument(8, "СѓС…РѕР¶РµРЅРЅС‹Р№ РїС‘СЃ РІС‹СЂР°Р·РёС‚РµР»СЊРЅС‹Рµ РіР»Р°Р·Р°"s, DocumentStatus::ACTUAL, { 5, -12, 2, 1 });
 
-    auto Docs = search_server.FindTopDocuments("ухоженный кот"s);
+    auto Docs = search_server.FindTopDocuments("СѓС…РѕР¶РµРЅРЅС‹Р№ РєРѕС‚"s);
     ASSERT_EQUAL(Docs.size(), 3u);
     int i;
     for (i = 0; i < 3; i++) {
