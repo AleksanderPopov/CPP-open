@@ -2,6 +2,7 @@
 #include "log_duration.h"
 #include "remove_duplicates.h"
 #include "test_example_functions.h"
+#include "unit.h"
 
 int main() {
 
@@ -105,6 +106,13 @@ int main() {
     MatchDocuments(search_server_4, "модный -кот"s);
     MatchDocuments(search_server_4, "модный --пёс"s);
     MatchDocuments(search_server_4, "пушистый - хвост"s);
+    
+    
+    // Unit Test
+    std::cout << std::endl;
+    TestSearchServer();
+    // Если вы видите эту строку, значит все тесты прошли успешно    
+    std::cout << "Search server testing finished !"s << std::endl << std::endl;
 
     return 0;
 }
