@@ -18,7 +18,7 @@ https://github.com/AleksanderPopov/CPP-open/blob/main/SingleLinkedList.cpp
  * Linux OS
  * gcc
  * gdb
- * Visual Studio
+ * Visual Studio Code
  * GIT
  
 
