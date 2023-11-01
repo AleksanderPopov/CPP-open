@@ -231,10 +231,10 @@ void TestRelevance() {
     ASSERT_EQUAL(Docs.size(), 3u);
     int i;
     for (i = 0; i < 3; i++) {
-        ASSERT(abs(Docs[i].relevance - TestValues[i]) < 1e-6);
+        ASSERT(std::abs(Docs[i].relevance - TestValues[i]) < 1e-6);
     }
 
-    ASSERT(!(abs(Docs[1].relevance - TestValues[2]) < 1e-6));
+    ASSERT(!(std::abs(Docs[1].relevance - TestValues[2]) < 1e-6));
 }
 
 
