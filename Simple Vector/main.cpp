@@ -61,7 +61,7 @@ void TestNamedMoveConstructor() {
     SimpleVector<int> vector_to_move(GenerateVector(size));
     assert(vector_to_move.GetSize() == size);
 
-    SimpleVector<int> moved_vector(move(vector_to_move));
+    SimpleVector<int> moved_vector(std::move(vector_to_move));
     assert(moved_vector.GetSize() == size);
     assert(vector_to_move.GetSize() == 0);
     cout << "Done!" << endl << endl;
@@ -73,7 +73,7 @@ void TestNamedMoveOperator() {
     SimpleVector<int> vector_to_move(GenerateVector(size));
     assert(vector_to_move.GetSize() == size);
 
-    SimpleVector<int> moved_vector = move(vector_to_move);
+    SimpleVector<int> moved_vector = std::move(vector_to_move);
     assert(moved_vector.GetSize() == size);
     assert(vector_to_move.GetSize() == 0);
     cout << "Done!" << endl << endl;
@@ -87,7 +87,7 @@ void TestNoncopiableMoveConstructor() {
         vector_to_move.PushBack(X(i));
     }
 
-    SimpleVector<X> moved_vector = move(vector_to_move);
+    SimpleVector<X> moved_vector = std::move(vector_to_move);
     assert(moved_vector.GetSize() == size);
     assert(vector_to_move.GetSize() == 0);
 
